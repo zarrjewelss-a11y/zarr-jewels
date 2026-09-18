@@ -1,0 +1,295 @@
+@import "tailwindcss";
+
+/* =========================================================
+   ZARR JEWELS — PREMIUM BRAND THEME
+   ========================================================= */
+
+:root {
+  --background: #f8f5ed;
+  --foreground: #27352c;
+
+  /* ZARR Brand Colors */
+  --sage: #a8b09a;
+  --sage-dark: #7f8b72;
+  --sage-light: #e7eadf;
+
+  --champagne: #c6a66b;
+  --champagne-dark: #a88a55;
+  --champagne-light: #eadcc0;
+
+  --cream: #f8f5ed;
+  --ivory: #fffdf8;
+
+  --forest: #27352c;
+  --forest-light: #3b4b3f;
+
+  --border: #ddd8ca;
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  background: var(--champagne);
+  color: white;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sage);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--champagne);
+}
+
+/* =========================================================
+   OLD PINK CLASSES → ZARR BRAND COLORS
+   ---------------------------------------------------------
+   Yeh temporary compatibility layer hai.
+   Existing components mein agar bg-pink-600 hai,
+   woh automatically ZARR champagne/sage color ban jayega.
+   ========================================================= */
+
+/* Pink backgrounds */
+
+.bg-pink-50 {
+  background-color: #f8f5ed !important;
+}
+
+.bg-pink-100 {
+  background-color: #e7eadf !important;
+}
+
+.bg-pink-200 {
+  background-color: #d8ddcf !important;
+}
+
+.bg-pink-500 {
+  background-color: #c6a66b !important;
+}
+
+.bg-pink-600 {
+  background-color: #a88a55 !important;
+}
+
+.bg-pink-700 {
+  background-color: #8d7345 !important;
+}
+
+/* Pink text */
+
+.text-pink-500 {
+  color: #c6a66b !important;
+}
+
+.text-pink-600 {
+  color: #a88a55 !important;
+}
+
+.text-pink-700 {
+  color: #8d7345 !important;
+}
+
+/* Pink borders */
+
+.border-pink-500 {
+  border-color: #c6a66b !important;
+}
+
+.border-pink-600 {
+  border-color: #a88a55 !important;
+}
+
+.border-pink-700 {
+  border-color: #8d7345 !important;
+}
+
+/* Hover backgrounds */
+
+.hover\:bg-pink-50:hover {
+  background-color: #f3f0e7 !important;
+}
+
+.hover\:bg-pink-100:hover {
+  background-color: #e7eadf !important;
+}
+
+.hover\:bg-pink-600:hover {
+  background-color: #a88a55 !important;
+}
+
+.hover\:bg-pink-700:hover {
+  background-color: #8d7345 !important;
+}
+
+/* Hover text */
+
+.hover\:text-pink-600:hover {
+  color: #a88a55 !important;
+}
+
+.hover\:text-pink-700:hover {
+  color: #8d7345 !important;
+}
+
+/* =========================================================
+   ZARR CUSTOM UTILITIES
+   ========================================================= */
+
+.zarr-bg {
+  background: var(--cream);
+}
+
+.zarr-card {
+  background: var(--ivory);
+  border: 1px solid var(--border);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+.zarr-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--champagne);
+  box-shadow: 0 15px 40px rgba(80, 80, 60, 0.1);
+}
+
+.zarr-gold {
+  color: var(--champagne);
+}
+
+.zarr-sage {
+  color: var(--sage-dark);
+}
+
+.zarr-button {
+  background: var(--champagne-dark);
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.zarr-button:hover {
+  background: #8d7345;
+  transform: translateY(-1px);
+}
+
+.zarr-outline {
+  border: 1px solid var(--champagne);
+  color: var(--champagne-dark);
+  background: transparent;
+  transition: all 0.3s ease;
+}
+
+.zarr-outline:hover {
+  background: var(--champagne);
+  color: white;
+}
+
+/* =========================================================
+   PREMIUM SHADOW
+   ========================================================= */
+
+.zarr-shadow {
+  box-shadow: 0 15px 45px rgba(60, 70, 55, 0.08);
+}
+
+/* =========================================================
+   PREMIUM GRADIENT
+   ========================================================= */
+
+.zarr-gradient {
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(168, 176, 154, 0.25),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #fffdf8 0%,
+      #f8f5ed 50%,
+      #e7eadf 100%
+    );
+}
+
+/* =========================================================
+   GOLD SHINE
+   ========================================================= */
+
+.zarr-gold-text {
+  background: linear-gradient(
+    135deg,
+    #a88a55,
+    #e3cc9d,
+    #a88a55
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+input,
+textarea,
+select {
+  border-color: var(--border);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--champagne);
+}
+
+/* =========================================================
+   IMAGES
+   ========================================================= */
+
+img {
+  max-width: 100%;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+}
