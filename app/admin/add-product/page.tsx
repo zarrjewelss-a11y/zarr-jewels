@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { ArrowLeft, Save } from "lucide-react";
@@ -14,11 +14,76 @@ export default function AddProductPage() {
   const [category, setCategory] = useState("Necklace");
   const [price, setPrice] = useState("");
   const [stock, setStock] = useState("");
-  const [image, setImage] = useState("");
+  const [images, setImages] = useState<string[]>([]);
   const [description, setDescription] = useState("");
 
-  const [saving, setSaving] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [saving, setSaving] = useState(false);
+  const handleImageUpload = async (
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  const files = Array.from(e.target.files || []);
+
+  if (files.length === 0) return;
+
+  const invalidFile = files.find(
+    (file) => !file.type.startsWith("image/")
+  );
+
+  if (invalidFile) {
+    alert("Please select image files only.");
+    return;
+  }
+
+  try {
+    setUploadingImage(true);
+
+    const uploadedUrls: string[] = [];
+
+    for (const file of files) {
+      const formData = new FormData();
+
+      formData.append("file", file);
+      formData.append("upload_preset", "zarr_jewels_products");
+
+      const response = await fetch(
+        "https://api.cloudinary.com/v1_1/grtgh7br/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.secure_url) {
+        console.error("Cloudinary upload error:", data);
+        throw new Error("Image upload failed.");
+      }
+
+      uploadedUrls.push(data.secure_url);
+    }
+
+    setImages((prev) => [...prev, ...uploadedUrls]);
+
+    alert(
+      `${uploadedUrls.length} image${
+        uploadedUrls.length > 1 ? "s" : ""
+      } uploaded successfully! 🎉`
+    );
+  } catch (error) {
+    console.error("Image upload error:", error);
+    alert("Failed to upload image. Please try again.");
+  } finally {
+    setUploadingImage(false);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }
+};
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -42,11 +107,10 @@ export default function AddProductPage() {
       return;
     }
 
-    if (!image.trim()) {
-      alert("Please enter product image URL.");
-      return;
-    }
-
+    if (images.length === 0) {
+  alert("Please upload at least one product image.");
+  return;
+}
     try {
       setSaving(true);
 
@@ -55,7 +119,8 @@ export default function AddProductPage() {
         category,
         price: Number(price),
         stock: Number(stock),
-        image: image.trim(),
+        image: images[0],
+images: images,
         description: description.trim(),
         createdAt: serverTimestamp(),
       });
@@ -177,44 +242,80 @@ export default function AddProductPage() {
 
             </div>
 
-            {/* Image URL */}
-            <div>
-              <label className="block font-semibold text-gray-700 mb-2">
-                Product Image URL
-              </label>
+            {/* Product Image */}
+<div>
+  <label className="block font-semibold text-gray-700 mb-2">
+    Product Image
+  </label>
 
-              <input
-                type="url"
-                placeholder="https://example.com/product-image.jpg"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
-                className="w-full border border-gray-300 rounded-xl px-4 py-3 outline-none focus:ring-2 focus:ring-[#b08d57]"
-              />
+  <input
+  ref={fileInputRef}
+  type="file"
+  accept="image/*"
+  multiple
+  onChange={handleImageUpload}
+  className="hidden"
+/>
 
-              <p className="text-sm text-gray-400 mt-2">
-                Enter a direct image URL.
-              </p>
-            </div>
+  <button
+    type="button"
+    onClick={() => fileInputRef.current?.click()}
+    disabled={uploadingImage}
+    className="w-full sm:w-auto px-6 py-3 rounded-xl border border-[#b08d57] text-[#b08d57] hover:bg-[#faf7f0] disabled:opacity-60 disabled:cursor-not-allowed font-semibold"
+  >
+    {uploadingImage ? "Uploading Image..." : "Upload Product Image"}
+  </button>
 
-            {/* Image Preview */}
-            {image.trim() && (
-              <div>
-                <p className="font-semibold text-gray-700 mb-2">
-                  Image Preview
-                </p>
+  <p className="text-sm text-gray-400 mt-2">
+    Select a product image from your phone or computer.
+  </p>
+</div>
 
-                <div className="w-40 h-40 border rounded-xl overflow-hidden bg-gray-50">
-                  <img
-                    src={image}
-                    alt="Product preview"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.style.display = "none";
-                    }}
-                  />
-                </div>
-              </div>
-            )}
+{/* Image Preview */}
+{images.length > 0 && (
+  <div>
+    <p className="font-semibold text-gray-700 mb-3">
+      Product Images
+    </p>
+
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {images.map((url, index) => (
+        <div
+          key={url}
+          className="relative border rounded-xl overflow-hidden bg-gray-50"
+        >
+          <img
+            src={url}
+            alt={`Product image ${index + 1}`}
+            className="w-full h-40 object-cover"
+          />
+
+          {index === 0 && (
+            <span className="absolute top-2 left-2 bg-[#b08d57] text-white text-xs px-2 py-1 rounded-lg">
+              Main Image
+            </span>
+          )}
+
+          <button
+            type="button"
+            onClick={() => {
+              setImages((prev) =>
+                prev.filter((_, i) => i !== index)
+              );
+            }}
+            className="absolute top-2 right-2 bg-white text-red-500 text-xs px-2 py-1 rounded-lg shadow"
+          >
+            Remove
+          </button>
+        </div>
+      ))}
+    </div>
+
+    <p className="text-sm text-green-600 mt-3">
+      ✓ {images.length} image{images.length > 1 ? "s" : ""} uploaded
+    </p>
+  </div>
+)}
 
             {/* Description */}
             <div>

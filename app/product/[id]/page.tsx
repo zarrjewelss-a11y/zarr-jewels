@@ -41,7 +41,8 @@ type Product = {
   price: number;
   oldPrice?: number;
   image: string;
-  category: string;
+images?: string[];
+category: string;
   rating: number;
   sale?: boolean;
   featured?: boolean;
@@ -103,7 +104,12 @@ useEffect(() => {
               ? Number(data.oldPrice)
               : undefined,
           image: data.image || "",
-          category: data.category || "",
+images: Array.isArray(data.images)
+  ? data.images
+  : data.image
+    ? [data.image]
+    : [],
+category: data.category || "",
           rating: Number(data.rating) || 0,
           sale: data.sale || false,
           featured: data.featured || false,
@@ -197,15 +203,18 @@ setProducts(firestoreProducts);
   // -----------------------------------------
 
   const images = useMemo(() => {
-    if (!product?.image) return [];
+  if (!product) return [];
 
-    return [
-      product.image,
-      product.image,
-      product.image,
-      product.image,
-    ];
-  }, [product]);
+  if (Array.isArray(product.images) && product.images.length > 0) {
+    return product.images;
+  }
+
+  if (product.image) {
+    return [product.image];
+  }
+
+  return [];
+}, [product]);
 
   // -----------------------------------------
   // AVERAGE RATING

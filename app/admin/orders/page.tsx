@@ -10,7 +10,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-import { db } from "@/lib/firebase";
+import { db, auth } from "@/lib/firebase";
 import Link from "next/link";
 import { ArrowLeft, Eye, Search, Trash2 } from "lucide-react";
 
@@ -70,16 +70,46 @@ const updateStatus = async (id: string, status: string) => {
 };
 const deleteOrder = async (id: string) => {
   const confirmDelete = window.confirm(
-    "Are you sure you want to delete this order?"
+    "Are you sure you want to delete this test order?"
   );
 
   if (!confirmDelete) return;
 
+  if (!auth.currentUser) {
+    alert("Please log in as admin.");
+    return;
+  }
+
   try {
-    await deleteDoc(doc(db, "orders", id));
+    const idToken = await auth.currentUser.getIdToken();
+
+    const res = await fetch("/api/admin/orders", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${idToken}`,
+      },
+      body: JSON.stringify({
+        orderId: id,
+      }),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      if (data.error === "FORBIDDEN") {
+        alert("Admin access required.");
+      } else if (data.error === "ORDER_NOT_FOUND") {
+        alert("Order not found.");
+      } else {
+        alert("Failed to delete order.");
+      }
+      return;
+    }
+
     alert("Order deleted successfully!");
   } catch (error) {
-    console.error(error);
+    console.error("DELETE ORDER ERROR:", error);
     alert("Failed to delete order.");
   }
 };

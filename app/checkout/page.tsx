@@ -328,30 +328,45 @@ export default function CheckoutPage() {
               />
 
               <div className="mt-8">
-                <h3 className="text-xl font-bold mb-4">Payment Method</h3>
+  <h3 className="text-xl font-bold mb-4">Payment Method</h3>
 
-                <label className="flex items-center gap-3 mb-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="Cash on Delivery"
-                    checked={paymentMethod === "Cash on Delivery"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  Cash on Delivery
-                </label>
+  <label className="flex items-start gap-3 cursor-pointer">
+    <input
+      type="radio"
+      name="payment"
+      value="Cash on Delivery"
+      checked={paymentMethod === "Cash on Delivery"}
+      onChange={(e) => setPaymentMethod(e.target.value)}
+      className="mt-1"
+    />
 
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="payment"
-                    value="Credit / Debit Card"
-                    checked={paymentMethod === "Credit / Debit Card"}
-                    onChange={(e) => setPaymentMethod(e.target.value)}
-                  />
-                  Credit / Debit Card
-                </label>
-              </div>
+```
+<div className="flex-1">
+  <span className="font-semibold">Cash on Delivery</span>
+
+  <div className="mt-3 bg-pink-50 border border-pink-200 rounded-xl p-4">
+    <p className="font-semibold text-pink-700">
+      💳 Rs. 300 Advance Required
+    </p>
+
+    <p className="text-sm text-gray-600 mt-1">
+      COD order confirm karne ke liye Rs. 300 advance payment required hai.
+    </p>
+
+    <p className="text-sm font-semibold text-gray-700 mt-2">
+      Ye Rs. 300 aapke total order amount mein adjust ho jayega.
+    </p>
+
+    <p className="text-sm text-gray-600 mt-1">
+      Baqi amount delivery ke waqt pay karna hoga.
+    </p>
+  </div>
+</div>
+```
+
+  </label>
+</div>
+
             </div>
 
             {/* Order Summary */}

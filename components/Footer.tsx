@@ -47,7 +47,7 @@ export default function Footer() {
             <div className="flex gap-3 mt-7">
 
               <a
-                href="#"
+                href="https://www.instagram.com/zarrjewelers/"
                 aria-label="Instagram"
                 className="w-10 h-10 rounded-full border border-[#C8A96B]/40 flex items-center justify-center text-[#C8A96B] hover:bg-[#C8A96B] hover:text-[#27352C] transition duration-300"
               >
@@ -63,7 +63,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="mailto:support@zarr.com"
+                href="zarrjewelss@gmail.com"
                 aria-label="Email"
                 className="w-10 h-10 rounded-full border border-[#C8A96B]/40 flex items-center justify-center text-[#C8A96B] hover:bg-[#C8A96B] hover:text-[#27352C] transition duration-300"
               >
@@ -203,7 +203,7 @@ export default function Footer() {
                 />
 
                 <span>
-                  Karachi, Pakistan
+                  Islamabad, Pakistan
                 </span>
               </div>
 
@@ -214,7 +214,7 @@ export default function Footer() {
                 />
 
                 <span>
-                  +92 300 1234567
+                  +92 329 1406464
                 </span>
               </div>
 
@@ -225,7 +225,7 @@ export default function Footer() {
                 />
 
                 <span>
-                  support@zarr.com
+                  zarrjewelss@gmail.com
                 </span>
               </div>
 
