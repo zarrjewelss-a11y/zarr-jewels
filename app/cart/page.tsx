@@ -29,9 +29,9 @@ const applyCoupon = () => {
   if (coupon.toUpperCase() === "SAVE10") {
     setDiscount(total * 0.1);
     setMessage("✅ SAVE10 Applied (10% OFF)");
-  } else if (coupon.toUpperCase() === "NEXA20") {
+  } else if (coupon.toUpperCase() === "ZARR20" || coupon.toUpperCase() === "NEXA20") {
     setDiscount(total * 0.2);
-    setMessage("✅ NEXA20 Applied (20% OFF)");
+    setMessage(`✅ ${coupon.toUpperCase()} Applied (20% OFF)`);
   } else {
     setDiscount(0);
     setMessage("❌ Invalid Coupon Code");

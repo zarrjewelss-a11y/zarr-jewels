@@ -100,7 +100,7 @@ const [loading, setLoading] = useState(false);
         <p className="text-center text-gray-500 text-sm">
   Admin Login
   <br />
-  Email: <b>zarrjewlss@gmail.com</b>
+  Email: <b>zarrjewelss@gmail.com</b>
 </p>
 
         </div>

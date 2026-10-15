@@ -63,7 +63,7 @@ export default function Footer() {
               </a>
 
               <a
-                href="zarrjewelss@gmail.com"
+                href="mailto:zarrjewelss@gmail.com"
                 aria-label="Email"
                 className="w-10 h-10 rounded-full border border-[#C8A96B]/40 flex items-center justify-center text-[#C8A96B] hover:bg-[#C8A96B] hover:text-[#27352C] transition duration-300"
               >
@@ -213,9 +213,12 @@ export default function Footer() {
                   size={18}
                 />
 
-                <span>
+                <a
+                  href="tel:+923291406464"
+                  className="hover:text-[#C8A96B] transition"
+                >
                   +92 329 1406464
-                </span>
+                </a>
               </div>
 
               <div className="flex items-center gap-3">
@@ -224,9 +227,12 @@ export default function Footer() {
                   size={18}
                 />
 
-                <span>
+                <a
+                  href="mailto:zarrjewelss@gmail.com"
+                  className="hover:text-[#C8A96B] transition"
+                >
                   zarrjewelss@gmail.com
-                </span>
+                </a>
               </div>
 
             </div>

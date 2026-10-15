@@ -20,7 +20,7 @@ export default function ContactPage() {
           </h1>
 
           <p className="mt-5 text-lg text-pink-100">
-            We'd love to hear from you. Get in touch with us anytime.
+            We&apos;d love to hear from you. Get in touch with us anytime.
           </p>
         </div>
       </section>
@@ -43,7 +43,12 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-bold text-xl">Email</h3>
                   <p className="text-gray-600">
-                    support@nexa.com
+                    <a
+                      href="mailto:zarrjewelss@gmail.com"
+                      className="hover:text-pink-600 transition"
+                    >
+                      zarrjewelss@gmail.com
+                    </a>
                   </p>
                 </div>
               </div>
@@ -53,7 +58,12 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-bold text-xl">Phone</h3>
                   <p className="text-gray-600">
-                    +92 300 1234567
+                    <a
+                      href="tel:+923291406464"
+                      className="hover:text-pink-600 transition"
+                    >
+                      +92 329 1406464
+                    </a>
                   </p>
                 </div>
               </div>
@@ -63,7 +73,7 @@ export default function ContactPage() {
                 <div>
                   <h3 className="font-bold text-xl">Address</h3>
                   <p className="text-gray-600">
-                    Karachi, Pakistan
+                    Islamabad, Pakistan
                   </p>
                 </div>
               </div>

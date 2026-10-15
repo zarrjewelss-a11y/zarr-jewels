@@ -68,7 +68,7 @@ router.push("/profile");
           <h1 className="text-5xl font-bold">Create Account</h1>
 
           <p className="mt-4 text-pink-100 text-lg">
-            Join NEXA Jewelry today
+            Join ZARR JEWELS today
           </p>
         </div>
       </section>
