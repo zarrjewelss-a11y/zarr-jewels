@@ -10,12 +10,16 @@ import {
   Settings,
   ChevronRight,
   LogOut,
+  Home,
+  ShoppingBag,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import toast from "react-hot-toast";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const cards = [
   {
@@ -106,78 +110,101 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-pink-50 py-10 px-4">
-      <div className="max-w-6xl mx-auto">
+    <>
+      <Header />
 
-        {/* Header */}
-        <div className="bg-white rounded-2xl shadow p-8 mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+      <main className="min-h-screen bg-pink-50 py-10 px-4">
+        <div className="max-w-6xl mx-auto">
 
-            <div>
-              <h1 className="text-4xl font-bold text-pink-600">
-                My Account
-              </h1>
+          {/* Header Card */}
+          <div className="bg-white rounded-2xl shadow p-8 mb-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
 
-              <p className="text-gray-500 mt-2">
-                Welcome back to ZARR JEWELS 💖
-              </p>
-            </div>
-
-            {/* Logout */}
-            <button
-              onClick={handleLogout}
-              disabled={loggingOut}
-              className="inline-flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white px-6 py-3 rounded-full font-semibold transition"
-            >
-              <LogOut size={19} />
-
-              {loggingOut ? "Logging out..." : "Logout"}
-            </button>
-
-          </div>
-        </div>
-
-        {/* Account Cards */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-
-          {cards.map((card) => {
-            const Icon = card.icon;
-
-            return (
-              <Link
-                key={card.title}
-                href={card.href}
-                className="bg-white rounded-2xl shadow hover:shadow-xl transition p-6 group"
-              >
-                <div className="flex justify-between items-center mb-6">
-
-                  <div className="w-14 h-14 rounded-full bg-pink-100 flex items-center justify-center">
-                    <Icon
-                      className="text-pink-600"
-                      size={28}
-                    />
-                  </div>
-
-                  <ChevronRight
-                    className="text-gray-400 group-hover:text-pink-600 transition"
-                  />
-
-                </div>
-
-                <h2 className="text-xl font-bold">
-                  {card.title}
-                </h2>
+              <div>
+                <h1 className="text-4xl font-bold text-pink-600">
+                  My Account
+                </h1>
 
                 <p className="text-gray-500 mt-2">
-                  {card.description}
+                  Welcome back to ZARR JEWELS 💖
                 </p>
-              </Link>
-            );
-          })}
+              </div>
+
+              {/* Action Buttons: Home, Shop, Logout */}
+              <div className="flex flex-wrap items-center gap-3">
+                <Link
+                  href="/"
+                  className="inline-flex items-center justify-center gap-2 bg-pink-50 hover:bg-pink-100 text-pink-700 border border-pink-200 px-5 py-3 rounded-full font-semibold transition"
+                >
+                  <Home size={18} />
+                  Home
+                </Link>
+
+                <Link
+                  href="/shop"
+                  className="inline-flex items-center justify-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-5 py-3 rounded-full font-semibold transition shadow-sm"
+                >
+                  <ShoppingBag size={18} />
+                  Shop
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  disabled={loggingOut}
+                  className="inline-flex items-center justify-center gap-2 bg-red-500 hover:bg-red-600 disabled:bg-gray-400 text-white px-5 py-3 rounded-full font-semibold transition"
+                >
+                  <LogOut size={19} />
+                  {loggingOut ? "Logging out..." : "Logout"}
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+          {/* Account Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            {cards.map((card) => {
+              const Icon = card.icon;
+
+              return (
+                <Link
+                  key={card.title}
+                  href={card.href}
+                  className="bg-white rounded-2xl shadow hover:shadow-xl transition p-6 group"
+                >
+                  <div className="flex justify-between items-center mb-6">
+
+                    <div className="w-14 h-14 rounded-full bg-pink-100 flex items-center justify-center">
+                      <Icon
+                        className="text-pink-600"
+                        size={28}
+                      />
+                    </div>
+
+                    <ChevronRight
+                      className="text-gray-400 group-hover:text-pink-600 transition"
+                    />
+
+                  </div>
+
+                  <h2 className="text-xl font-bold">
+                    {card.title}
+                  </h2>
+
+                  <p className="text-gray-500 mt-2">
+                    {card.description}
+                  </p>
+                </Link>
+              );
+            })}
+
+          </div>
 
         </div>
+      </main>
 
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 }

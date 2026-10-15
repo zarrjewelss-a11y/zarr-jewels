@@ -23,6 +23,14 @@ export default function SettingsPage() {
     <div className="min-h-screen bg-pink-50 py-10 px-4">
       <div className="max-w-4xl mx-auto">
 
+        <button
+          type="button"
+          onClick={() => router.push("/profile")}
+          className="mb-6 text-pink-600 font-semibold hover:underline inline-flex items-center gap-1"
+        >
+          ← Back to My Account
+        </button>
+
         <div className="bg-white rounded-2xl shadow p-8">
           <h1 className="text-4xl font-bold text-pink-600 mb-2">
             Account Settings

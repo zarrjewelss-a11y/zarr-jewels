@@ -254,6 +254,14 @@ export default function AddressPage() {
     <div className="min-h-screen bg-pink-50 py-10 px-4">
       <div className="max-w-6xl mx-auto">
 
+        <button
+          type="button"
+          onClick={() => router.push("/profile")}
+          className="mb-6 text-pink-600 font-semibold hover:underline inline-flex items-center gap-1"
+        >
+          ← Back to My Account
+        </button>
+
         <div className="flex justify-between items-center mb-8 flex-wrap gap-4">
           <div>
             <h1 className="text-4xl font-bold text-pink-600">
