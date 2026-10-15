@@ -1,6 +1,50 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "@/lib/firebase";
 
 export default function Hero() {
+  const [heroImage, setHeroImage] = useState("");
+  const [heroImageAlt, setHeroImageAlt] = useState("ZARR JEWELS jewelry collection");
+
+  useEffect(() => {
+    let active = true;
+
+    const loadHeroImage = async () => {
+      try {
+        const snapshot = await getDocs(collection(db, "products"));
+
+        const product = snapshot.docs
+          .map((doc) => doc.data())
+          .find((data) => {
+            const image =
+              typeof data.image === "string" ? data.image.trim() : "";
+
+            return image.startsWith("https://");
+          });
+
+        if (active && product) {
+          setHeroImage(product.image.trim());
+          setHeroImageAlt(
+            typeof product.name === "string" && product.name.trim()
+              ? product.name.trim()
+              : "ZARR JEWELS jewelry"
+          );
+        }
+      } catch (error) {
+        console.error("Error loading Hero product image:", error);
+      }
+    };
+
+    loadHeroImage();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
   return (
     <section className="relative overflow-hidden bg-[#F8F7EF]">
 
@@ -204,45 +248,34 @@ export default function Hero() {
               <div className="absolute -inset-2 rounded-[36px] border border-[#A8AE91]/20" />
 
 
-              {/* Image */}
+             
+{/* Image */}
 
-              <div className="relative overflow-hidden rounded-[32px] bg-[#E9E6D9] shadow-[0_25px_70px_rgba(39,53,44,0.15)]">
+<div className="relative overflow-hidden rounded-[32px] bg-[#E9E6D9] shadow-[0_25px_70px_rgba(39,53,44,0.15)]">
 
-                <img
-                  src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=1200&q=90"
-                  alt="ZARR JEWELS premium jewelry collection"
-                  className="w-full h-[460px] sm:h-[520px] md:h-[590px] object-cover transition-transform duration-700 hover:scale-[1.02]"
-                />
+  {heroImage ? (
+    <img
+      src={heroImage}
+      alt={heroImageAlt}
+      className="w-full h-[460px] sm:h-[520px] md:h-[590px] object-cover transition-transform duration-700 hover:scale-[1.02]"
+    />
+  ) : (
+    <div
+      className="w-full h-[460px] sm:h-[520px] md:h-[590px] flex items-center justify-center bg-gradient-to-br from-[#F8F7EF] via-[#E9E6D9] to-[#D8C8A8]/40"
+      role="img"
+      aria-label="ZARR JEWELS collection image placeholder"
+    >
+      <span className="font-serif text-xl tracking-widest text-[#A88A55]">
+        ZARR JEWELS
+      </span>
+    </div>
+  )}
 
+  {/* Cream/Sage Overlay */}
 
-                {/* Cream/Sage Overlay */}
+  <div className="absolute inset-0 bg-gradient-to-t from-[#27352C]/25 via-transparent to-[#FFFDF7]/5 pointer-events-none" />
 
-                <div className="absolute inset-0 bg-gradient-to-t from-[#27352C]/25 via-transparent to-[#FFFDF7]/5 pointer-events-none" />
-
-              </div>
-
-
-              {/* =========================
-                  OFFER CARD
-              ========================== */}
-
-              <div className="absolute top-5 right-[-10px] md:right-[-22px] bg-[#A8AE91] text-white px-6 py-5 rounded-[20px] shadow-xl">
-
-                <p className="text-[9px] tracking-[0.28em] uppercase">
-                  Special Offer
-                </p>
-
-                <p className="font-serif text-2xl mt-1">
-                  25% OFF
-                </p>
-
-                <div className="w-8 h-px bg-white/50 mt-2" />
-
-                <p className="text-[10px] mt-2 opacity-90">
-                  New Collection
-                </p>
-
-              </div>
+</div>
 
 
               {/* =========================

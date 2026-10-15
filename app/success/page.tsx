@@ -1,12 +1,17 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { CheckCircle } from "lucide-react";
 
 export default function SuccessPage() {
-  const orderId = "#" + Math.floor(100000 + Math.random() * 900000);
+  const [orderId, setOrderId] = useState("#849201");
+
+  useEffect(() => {
+    setOrderId("#" + Math.floor(100000 + Math.random() * 900000));
+  }, []);
 
   return (
     <>
@@ -25,9 +30,9 @@ export default function SuccessPage() {
           </h1>
 
  <p className="text-gray-600 mt-5 text-lg leading-8">
-  Thank you for choosing <strong>NEXA Jewelry</strong>.
+  Thank you for choosing <strong>ZARR JEWELS</strong>.
   Your order has been placed successfully and is now being processed.
-  We'll notify you by email once your order has been shipped.
+  We&apos;ll notify you by email once your order has been shipped.
 </p>
 
           <div className="mt-8 bg-pink-50 rounded-2xl p-6">

@@ -21,36 +21,35 @@ export default function EditProductPage() {
     description: "",
   });
 
-useEffect(() => {
-  const isLoggedIn = localStorage.getItem("adminLoggedIn");
+  const loadProduct = async () => {
+    try {
+      const docRef = doc(db, "products", String(id));
+      const docSnap = await getDoc(docRef);
 
-  if (!isLoggedIn) {
-    router.replace("/admin/login");
-    return;
-  }
-
-  loadProduct();
-}, [id, router]);
-
-const loadProduct = async () => {
-  try {
-    const docRef = doc(db, "products", String(id));
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      setProduct({
-        id: docSnap.id,
-        ...docSnap.data(),
-      });
-    } else {
-      alert("Product not found.");
-      router.push("/admin/products");
+      if (docSnap.exists()) {
+        setProduct({
+          id: docSnap.id,
+          ...docSnap.data(),
+        });
+      } else {
+        alert("Product not found");
+        router.push("/admin/products");
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-    alert("Failed to load product.");
-  }
-};
+  };
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("adminLoggedIn");
+
+    if (!isLoggedIn) {
+      router.replace("/admin/login");
+      return;
+    }
+
+    loadProduct();
+  }, [id, router]);
 const handleChange = (
   e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 ) => {

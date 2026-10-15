@@ -27,50 +27,50 @@ export default function OrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-  loadOrders();
-}, [router]);
-
   const loadOrders = async () => {
-  try {
-    const auth = getAuth();
-    const user = auth.currentUser;
+    try {
+      const auth = getAuth();
+      const user = auth.currentUser;
 
-    if (!user) {
-  router.replace("/login");
-  return;
-}
+      if (!user) {
+        router.replace("/login");
+        return;
+      }
 
-    const q = query(
-      collection(db, "orders"),
-      where("userId", "==", user.uid)
-    );
+      const q = query(
+        collection(db, "orders"),
+        where("userId", "==", user.uid)
+      );
 
-    const snapshot = await getDocs(q);
+      const snapshot = await getDocs(q);
 
-    const data: Order[] = snapshot.docs.map((doc) => ({
-      ...(doc.data() as Order),
-    }));
+      const data: Order[] = snapshot.docs.map((doc) => ({
+        ...(doc.data() as Order),
+      }));
 
-    data.sort((a: any, b: any) => {
-      const dateA = a.createdAt?.toMillis
-        ? a.createdAt.toMillis()
-        : 0;
+      data.sort((a: any, b: any) => {
+        const dateA = a.createdAt?.toMillis
+          ? a.createdAt.toMillis()
+          : 0;
 
-      const dateB = b.createdAt?.toMillis
-        ? b.createdAt.toMillis()
-        : 0;
+        const dateB = b.createdAt?.toMillis
+          ? b.createdAt.toMillis()
+          : 0;
 
-      return dateB - dateA;
-    });
+        return dateB - dateA;
+      });
 
-    setOrders(data);
-  } catch (error) {
-    console.error("Failed to load orders:", error);
-  } finally {
-    setLoading(false);
-  }
-};
+      setOrders(data);
+    } catch (error) {
+      console.error("Failed to load orders:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadOrders();
+  }, [router]);
 
   if (loading) {
     return (
